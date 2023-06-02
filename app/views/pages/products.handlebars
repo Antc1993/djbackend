@@ -1,0 +1,57 @@
+<script>
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        let tabla = document.getElementById('productos');
+        const list = document.createDocumentFragment();
+
+        fetch('/api/products')
+        .then(response => response.json())
+        .then(function(data){
+            let productsList = data;
+            productsList.map(function(product){
+
+                let tr = document.createElement('tr');
+                let tdTitle = document.createElement('td');
+                let tdDescription = document.createElement('td');
+                let tdPrice = document.createElement('td');
+
+                let title = document.createElement('span');
+                let description = document.createElement('span');
+                let price = document.createElement('span');
+
+                title.innerHTML = `${product.title}`;
+                description.innerHTML = `${product.description}`;
+                price.innerHTML = `${product.price}`;
+
+                tdTitle.appendChild(title)
+                tdDescription.appendChild(description)
+                tdPrice.appendChild(price)
+
+                tr.appendChild(tdTitle);
+                tr.appendChild(tdDescription);
+                tr.appendChild(tdPrice);
+                
+                list.appendChild(tr);
+                
+            })
+
+          tabla.appendChild(list)
+        });
+      
+    })
+    
+</script>
+
+<style>
+    table {
+        width: 80%;
+    }
+
+    table, th, td {
+    border: 1px solid;
+    }
+</style>
+
+<table id="productos">
+    
+</table>
